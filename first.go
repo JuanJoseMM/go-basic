@@ -25,8 +25,9 @@ func main() {
 	router := gin.Default()
 
 	router.POST("/check-program", checkProgramHandler)
+	//router.POST("/check-tasklist", mostrarTasklist)
 
-	router.Run(":8080") // Inicia el servidor en el puerto 8080
+	router.Run("0.0.0.0:8080") // Inicia el servidor en el puerto 8080
 }
 
 func checkProgramHandler(c *gin.Context) {
@@ -64,6 +65,17 @@ func isProgramRunning(programName string) (bool, string) {
 	}
 
 	return true, "" //string(output)
+}
+func mostrarTasklist() {
+
+	cmd := exec.Command("tasklist", "/nh", "/FI")
+	output, err := cmd.Output()
+	if err != nil {
+		fmt.Println("no se encontro el programa", err)
+		return
+	}
+	fmt.Println(string(output))
+	//fmt.Println(reflect.TypeOf(output))
 }
 
 /**
